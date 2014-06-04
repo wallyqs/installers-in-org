@@ -1,0 +1,24 @@
+#+TITLE:      Install latest Go
+#+runmode:    chained
+#+final_task: update-go
+
+- Dependencies
+  + mercurial needed for the install
+
+#+name: hg-clone
+#+begin_src sh
+hg clone -u release https://code.google.com/p/go
+#+end_src
+
+#+name: go-compile
+#+begin_src sh :after hg-clone
+cd go/src
+./all.bash
+#+end_src
+
+#+name: update-go
+#+begin_src sh 
+cp ./go/bin/go    /usr/local/bin/go
+cp ./go/bin/gofmt /usr/local/bin/gofmt
+#+end_src
+
