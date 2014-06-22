@@ -2,8 +2,6 @@
 #+runmode:    chained
 #+final_task: update-go
 
-- Dependencies
-  + mercurial needed for the install
 
 #+name: hg-clone
 #+begin_src sh
@@ -17,7 +15,7 @@ cd go/src
 #+end_src
 
 #+name: update-go
-#+begin_src sh 
+#+begin_src sh :after go-compile
 cp ./go/bin/go    /usr/local/bin/go
 cp ./go/bin/gofmt /usr/local/bin/gofmt
 #+end_src
