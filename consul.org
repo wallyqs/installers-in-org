@@ -1,0 +1,40 @@
+#+TITLE:      Consul development environment
+#+startup:    showeverything
+
+** Installing
+
+#+begin_src sh :tangle .env
+export GOPATH=`pwd`
+export DST=`pwd`/src/github.com/hashicorp
+#+end_src
+
+#+name: git-clone
+#+begin_src sh :results output
+source .env
+mkdir -p $DST
+cd $DST
+git clone https://github.com/hashicorp/consul.git
+#+end_src
+
+#+name: tests-run
+#+begin_src sh
+source .env
+cd $DST/consul
+go test -x ./...
+#+end_src
+
+#+name: consul-build
+#+begin_src sh :after tests-run
+source .env
+cd $DST/consul
+pwd
+make
+#+end_src
+
+#+name: consul-version
+#+begin_src sh :after consul-build
+source .env
+cd $DST/consul
+ls -la
+./bin/consul version
+#+end_src
