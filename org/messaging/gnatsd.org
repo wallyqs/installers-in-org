@@ -1,0 +1,39 @@
+#+TITLE:      Go NATS install
+#+runmode:    idempotent
+#+final_task: run-gnatsd
+
+#+begin_src sh :tangle src/.env :mkdirp true
+export GOPATH=`pwd`
+export DST=`pwd`/src/github.com/apcera
+#+end_src
+
+#+name: cloned-git-already
+#+BEGIN_SRC sh :dir src
+source .env
+[ -e $DST/gnatsd/.git ]
+#+END_SRC
+
+#+name: git-clone
+#+begin_src sh :unless cloned-git-already :dir src
+source .env
+
+mkdir -p $DST
+cd $DST
+git clone https://github.com/apcera/gnatsd.git
+#+end_src
+
+#+name: go-build
+#+begin_src sh :dir src/
+source .env
+echo $GOPATH
+echo $DST
+cd $DST/gnatsd
+go build
+#+end_src
+
+#+name: run-gnatsd
+#+begin_src sh :dir src
+source .env
+cd $DST/gnatsd
+./gnatsd
+#+end_src

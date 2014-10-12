@@ -1,19 +1,45 @@
-#+TITLE:      Install latest Go
-#+runmode:    idempotent
+#+TITLE:    Install Go
+#+runmode:  idempotent
+#+macro:    go-version "1.3.3"
+
+*** Checking out the source
+
+We will need mercurial for this.  If not installed already,
+we will install the packace.
+
+#+name: mercurial-installed
+#+BEGIN_SRC sh
+which hg
+#+END_SRC
+
+#+name: install-mercurial
+#+BEGIN_SRC sh :unless mercurial-installed
+sudo apt-get install mercurial -y
+#+END_SRC
 
 #+name: hg-clone
-#+begin_src sh
+#+begin_src sh 
+mkdir -p src/
+cd src
 hg clone -u release https://code.google.com/p/go
 #+end_src
 
+*** Compile it
+
+#+name: go-already-updated
+#+BEGIN_SRC sh :results output
+echo `go version` | grep "go1.3.3"
+#+END_SRC
+
 #+name: go-compile
-#+begin_src sh
-cd go/src
+#+begin_src sh :dir src/go/src :unless go-already-updated
 ./all.bash
 #+end_src
 
 #+name: update-go
-#+begin_src sh
-cp ./go/bin/go    /usr/local/bin/go
-cp ./go/bin/gofmt /usr/local/bin/gofmt
+#+begin_src sh :dir src/go :unless go-already-updated
+chmod +x ./bin/go
+chmod +x ./bin/gofmt
+sudo cp ./bin/go    /usr/local/bin/go
+sudo cp ./bin/gofmt /usr/local/bin/gofmt
 #+end_src
