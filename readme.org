@@ -1,0 +1,6 @@
+# -*- mode: org; mode: auto-fill -*-
+
+Repository with documented steps on how to install something,
+meant to be used with the Org Converge util.
+
+Only platform that these work on is Ubuntu 14.04.
