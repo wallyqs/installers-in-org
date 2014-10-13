@@ -1,0 +1,99 @@
+#+TITLE:	Installing latest Org mode
+#+runmode:	idempotent
+#+startup:      showeverything
+
+** From source
+*** Prerequisites
+
+The version via elpa should not have been installed.
+
+#+name: elpa-not-installed
+#+BEGIN_SRC sh
+ls ~/.emacs.d/elpa/ | grep org-*
+#+END_SRC
+
+*** Cloning the repo
+
+#+name: org-mode-git-cloned
+#+BEGIN_SRC sh :dir src
+[ -e org-mode/.git ]
+#+END_SRC
+
+#+name: git-clone-org-mode
+#+BEGIN_SRC sh :unless org-mode-git-cloned :dir src
+git clone git://orgmode.org/org-mode.git org-mode
+#+END_SRC
+
+*** Compilation
+
+**** COMMENT OS X
+:PROPERTIES:
+:platform: osx
+:END:
+
+Example of doing this in OS X, should be done on a fresh install as well (=-Q=)
+
+#+name: os-x-compile
+#+BEGIN_SRC sh :dir src/org-mode :platform osx
+# OS X setup
+export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+$EMACS -batch -Q -L lisp -l ../mk/org-fixup -f org-make-autoloads-compile-force
+#+END_SRC
+
+**** DONE Ubuntu 14.04
+:PROPERTIES:
+:platform: ubuntu-14-04
+:END:
+
+#+name: compile-org-mode
+#+BEGIN_SRC sh :dir src/org-mode
+# OS X setup
+make autoloads
+export EMACS="/usr/bin/emacs"
+# $EMACS -batch -Q -L lisp -l ../mk/org-fixup -f org-make-autoloads-compile-force
+$EMACS -batch -q -L lisp -l ../mk/org-fixup -f org-make-autoloads-compile-force
+#+END_SRC
+
+#+name: install-org-mode
+#+BEGIN_SRC sh :dir src/org-mode
+make
+make install
+#+END_SRC
+
+*** Activation
+
+**** Add the following to =.emacs=
+
+#+BEGIN_SRC emacs-lisp
+;; -- Setting up latest Org mode
+;;
+;; add org--mode to load path
+(add-to-list 'load-path "~/repos/installers-in-org/src/org-mode/lisp")
+(add-to-list 'load-path "~/repos/installers-in-org/src/org-mode/contrib/lisp")
+(require 'org)
+(org-reload)
+
+(setq org-src-fontify-natively t)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (C . t)
+   (shell . t)
+   (sh . t)
+   (ruby . t)
+   (python . t)
+   (clojure . t)
+   (js . t)
+   (haskell . t)
+   ))
+(setq org-confirm-babel-evaluate nil)
+#+END_SRC
+
+** Via ELPA
+
+Most straighforward way of doing this is as follows:
+
+- Open a fresh Emacs with -q option <-- Important: Otherwise the install breaks and some symbols become undefined
+- M-x package-install RET org-mode RET
+- Start Emacs once again
