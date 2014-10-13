@@ -1,0 +1,37 @@
+#+TITLE: Haskell install
+
+*** Install the Haskell platform
+
+#+name: already-downloaded-haskell-platform
+#+BEGIN_SRC sh :dir src
+[ -e haskell-platform-2014.2.0.0-srcdist.tar.gz ]
+#+END_SRC
+
+#+name: haskell-platform-package
+#+BEGIN_SRC sh :dir src :unless already-downloaded-haskell-platform
+curl -O http://www.haskell.org/platform/download/2014.2.0.0/haskell-platform-2014.2.0.0-srcdist.tar.gz
+tar xvf haskell-platform-2014.2.0.0-srcdist.tar.gz
+#+END_SRC
+
+*** Install Glasgow Haskell
+
+**** Get the source
+
+#+name: already-downloaded-glasgow-haskell-pkg
+#+BEGIN_SRC sh :dir src
+[ -e ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2 ]
+#+END_SRC
+
+#+name: ghc-download
+#+begin_src sh :dir src :unless already-downloaded-glasgow-haskell-pkg
+curl -O http://www.haskell.org/ghc/dist/7.8.3/ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2
+tar xvf ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2
+#+end_src
+
+**** Install
+
+#+name: install-ghc
+#+BEGIN_SRC sh :dir src/ghc-7.8.3
+./configure
+sudo make install
+#+END_SRC
