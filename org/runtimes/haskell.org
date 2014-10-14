@@ -1,21 +1,9 @@
-#+TITLE: Haskell install
-
-*** Install the Haskell platform
-
-#+name: already-downloaded-haskell-platform
-#+BEGIN_SRC sh :dir src
-[ -e haskell-platform-2014.2.0.0-srcdist.tar.gz ]
-#+END_SRC
-
-#+name: haskell-platform-package
-#+BEGIN_SRC sh :dir src :unless already-downloaded-haskell-platform
-curl -O http://www.haskell.org/platform/download/2014.2.0.0/haskell-platform-2014.2.0.0-srcdist.tar.gz
-tar xvf haskell-platform-2014.2.0.0-srcdist.tar.gz
-#+END_SRC
+#+TITLE:          Haskell setup
+#+containerimage: haskell-{{{haskell-version}}}
 
 *** Install Glasgow Haskell
 
-**** Get the source
+**** Get the Source
 
 #+name: already-downloaded-glasgow-haskell-pkg
 #+BEGIN_SRC sh :dir src
@@ -28,10 +16,89 @@ curl -O http://www.haskell.org/ghc/dist/7.8.3/ghc-7.8.3-x86_64-unknown-linux-deb
 tar xvf ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2
 #+end_src
 
-**** Install
+**** Install GHC
+
+#+name: ghc-already-installed
+#+BEGIN_SRC sh 
+which ghc
+#+END_SRC
 
 #+name: install-ghc
-#+BEGIN_SRC sh :dir src/ghc-7.8.3
+#+BEGIN_SRC sh :dir src/ghc-7.8.3 :unless ghc-already-installed
 ./configure
 sudo make install
 #+END_SRC
+
+*** Install Cabal package manager
+
+***** Dependencies
+:PROPERTIES:
+:platform: ubuntu-14-04
+:END:
+
+#+name: cabal-deps-already-installed
+#+BEGIN_SRC sh
+dpkg -l | grep libgmp-dev
+#+END_SRC
+
+#+name: cabal-deps
+#+BEGIN_SRC sh :unless cabal-deps-already-installed
+sudo apt-get install libgmp-dev
+#+END_SRC
+
+***** Cabal install
+
+#+name: already-downloaded-cabal
+#+BEGIN_SRC sh :dir src
+[ -e cabal-install-1.20.0.3.tar.gz ]
+#+END_SRC
+
+#+name: download-cabal
+#+BEGIN_SRC sh :dir src :unless already-downloaded-cabal
+curl -O http://www.haskell.org/cabal/release/cabal-install-1.20.0.3/cabal-install-1.20.0.3.tar.gz
+tar xvf cabal-install-1.20.0.3.tar.gz
+#+END_SRC
+
+#+name: cabal-in-path
+#+BEGIN_SRC sh
+which cabal
+#+END_SRC
+
+#+name: install-cabal
+#+BEGIN_SRC sh :dir src/cabal-install-1.20.0.3 :unless cabal-in-path
+./bootstrap.sh
+#+END_SRC
+
+#+name: put-cabal-in-path
+#+BEGIN_SRC sh :unless cabal-in-path
+sudo ln -ns $HOME/.cabal/bin /usr/local/bin
+#+END_SRC
+
+*** Install the Haskell platform
+
+**** Get the source
+
+#+name: already-downloaded-haskell-platform
+#+BEGIN_SRC sh :dir src
+[ -e haskell-platform-2014.2.0.0-srcdist.tar.gz ]
+#+END_SRC
+
+#+name: haskell-platform-package
+#+BEGIN_SRC sh :dir src :unless already-downloaded-haskell-platform
+curl -O http://www.haskell.org/platform/download/2014.2.0.0/haskell-platform-2014.2.0.0-srcdist.tar.gz
+tar xvf haskell-platform-2014.2.0.0-srcdist.tar.gz
+#+END_SRC
+
+**** Install the platform
+
+#+name: install-haskell-platform
+#+BEGIN_SRC sh :dir src/haskell-platform-2014.2.0.0
+./platform.sh ../ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2 
+#+END_SRC
+
+*** Smoke test
+
+#+BEGIN_SRC sh :results output code
+ghci 2>&1 | tee
+#+END_SRC
+
