@@ -31,7 +31,7 @@ sudo make install
 
 *** Install Cabal package manager
 
-***** Dependencies
+**** Dependencies
 :PROPERTIES:
 :platform: ubuntu-14-04
 :END:
@@ -46,7 +46,7 @@ dpkg -l | grep libgmp-dev
 sudo apt-get install libgmp-dev
 #+END_SRC
 
-***** Cabal install
+**** Cabal install
 
 #+name: already-downloaded-cabal
 #+BEGIN_SRC sh :dir src
@@ -75,6 +75,18 @@ sudo ln -ns $HOME/.cabal/bin /usr/local/bin
 #+END_SRC
 
 *** Install the Haskell platform
+
+**** Dependencies
+
+#+name: cabal-hscolour-installed
+#+BEGIN_SRC sh
+cabal list | grep hscolour
+#+END_SRC
+
+#+name: cabal-hscolour
+#+BEGIN_SRC sh :unless cabal-hscolour-installed
+cabal install hscolour
+#+END_SRC
 
 **** Get the source
 
