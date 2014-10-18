@@ -22,10 +22,10 @@ git pull origin master
 
 #+name: check-for-upstream-changes
 #+BEGIN_SRC sh
-diff src/ob-go/ob-go.el src/org-mode/contrib/ob-go.el
+diff src/ob-go/ob-go.el src/org-mode/contrib/lisp/ob-go.el > /dev/null
 #+END_SRC
 
 #+name: install-ob-go
 #+BEGIN_SRC sh :unless check-for-upstream-changes
-cp src/ob-go/ob-go.el src/org-mode/contrib/
+cp src/ob-go/ob-go.el src/org-mode/contrib/lisp/
 #+END_SRC
