@@ -1,0 +1,31 @@
+#+title:	Org Babel for Go
+#+runmode:	idempotent
+
+*** Go mode included already?
+
+#+name: ob-go-already-cloned
+#+BEGIN_SRC sh
+[ -e src/ob-go/ ]
+#+END_SRC
+
+#+name: git-clone-ob-go
+#+BEGIN_SRC sh :unless ob-go-already-cloned
+git clone https://github.com/pope/ob-go.git src/ob-go/
+#+END_SRC
+
+*** Install and update
+
+#+name: update-ob-go-from-upstream
+#+BEGIN_SRC sh :dir src/ob-go/
+git pull origin master
+#+END_SRC
+
+#+name: check-for-upstream-changes
+#+BEGIN_SRC sh
+diff src/ob-go/ob-go.el src/org-mode/contrib/ob-go.el
+#+END_SRC
+
+#+name: install-ob-go
+#+BEGIN_SRC sh :unless check-for-upstream-changes
+cp src/ob-go/ob-go.el src/org-mode/contrib/
+#+END_SRC
