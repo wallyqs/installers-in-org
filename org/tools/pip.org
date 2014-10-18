@@ -1,0 +1,21 @@
+#+TITLE: Pip installer
+
+#+name: already-downloaded-get-pip-script
+#+BEGIN_SRC sh
+[ -e src/get-pip.py ]
+#+END_SRC
+
+#+name: download-pip
+#+BEGIN_SRC sh :dir src :unless already-downloaded-get-pip-script
+curl -O https://bootstrap.pypa.io/get-pip.py
+#+END_SRC
+
+#+name: pip-already-installed
+#+BEGIN_SRC sh
+which pip
+#+END_SRC
+
+#+name: install-pip
+#+BEGIN_SRC sh :dir src :unless pip-already-installed
+sudo python get-pip.py
+#+END_SRC
