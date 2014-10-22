@@ -97,3 +97,10 @@ Most straighforward way of doing this is as follows:
 - Open a fresh Emacs with -q option <-- Important: Otherwise the install breaks and some symbols become undefined
 - M-x package-install RET org-mode RET
 - Start Emacs once again
+
+** COMMENT Latex packages
+
+#+name: to-export-pdf
+#+BEGIN_SRC sh
+sudo apt-get install texlive-base texlive-fonts-recommended ttf-marvosym -y
+#+END_SRC

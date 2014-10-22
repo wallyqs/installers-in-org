@@ -1,0 +1,31 @@
+#+TITLE: Go mode
+#+runmode: idempotent
+
+*** Go mode included already?
+
+#+name: go-mode-already-cloned
+#+BEGIN_SRC sh
+[[ -e src/go-mode.el/ ]]
+#+END_SRC
+
+#+name: get-go-mode
+#+BEGIN_SRC sh :dir src :unless go-mode-already-cloned
+git clone https://github.com/dominikh/go-mode.el.git
+#+END_SRC
+
+*** Install and update
+
+#+name: update-go-mode-from-upstream
+#+BEGIN_SRC sh :dir src/go-mode.el/
+git pull origin master
+#+END_SRC
+
+#+name: check-for-upstream-changes
+#+BEGIN_SRC sh
+diff src/go-mode.el/go-mode.el ~/.emacs.d/go-mode.el > /dev/null
+#+END_SRC
+
+#+name: install-go-mode
+#+BEGIN_SRC sh :unless check-for-upstream-changes
+cp src/go-mode.el/go-mode.el ~/.emacs.d/go-mode.el
+#+END_SRC

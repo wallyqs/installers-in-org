@@ -1,0 +1,50 @@
+#+TITLE:    Installing Scala
+#+runmode:  idempotent
+
+** Getting the source
+*** Download
+
+#+name: already-downloaded-scala
+#+BEGIN_SRC sh :dir src
+[[ -e scala-2.11.2.tgz ]]
+#+END_SRC
+
+#+name: download-scala
+#+BEGIN_SRC sh :dir src :unless already-downloaded-scala
+curl -O http://downloads.typesafe.com/scala/2.11.2/scala-2.11.2.tgz
+#+END_SRC
+
+*** Unpacking
+
+#+name: already-unpacked
+#+BEGIN_SRC sh :dir src
+[[ -e scala-2.11.2.tgz ]]
+#+END_SRC
+
+#+name: unpack-scala
+#+begin_src sh :dir src :unless already-unpacked
+tar vfxz scala-2.11.2.tgz
+#+end_src
+
+** Installing SBT
+
+The Scala Building Tool:
+
+#+name: sbt-installed
+#+BEGIN_SRC sh :results output code 
+which sbt
+#+END_SRC
+
+#+name: already-downloaded-sbt
+#+BEGIN_SRC sh :dir src :unless sbt-installed
+[[ -e sbt.tgz ]]
+#+END_SRC
+
+#+name: get-sbt
+#+BEGIN_SRC sh :dir src :unless already-downloaded-sbt
+curl -O http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
+tar xvfz sbt.tgz
+#+END_SRC
+
+
+

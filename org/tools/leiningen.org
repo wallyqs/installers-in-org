@@ -1,0 +1,23 @@
+#+TITLE:   Installing leiningen
+#+runmode: idempotent
+
+#+name: lein-already-installed
+#+BEGIN_SRC sh
+which lein
+#+END_SRC
+
+#+name: get-lein
+#+BEGIN_SRC sh :dir src :unless lein-already-installed
+curl -O https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+#+END_SRC
+
+#+name: put-in-path
+#+BEGIN_SRC sh :dir src :unless lein-already-installed
+sudo cp lein  /usr/local/bin/
+sudo chmod +x /usr/local/bin/lein
+#+END_SRC
+
+#+name: initial-lein
+#+BEGIN_SRC sh
+lein
+#+END_SRC

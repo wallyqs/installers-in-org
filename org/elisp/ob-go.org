@@ -1,4 +1,4 @@
-#+title:	Org Babel for Go
+#+TITLE:	Org Babel for Go
 #+runmode:	idempotent
 
 *** Go mode included already?
