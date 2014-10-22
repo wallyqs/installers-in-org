@@ -1,0 +1,26 @@
+#+TITLE: Elisp useful for Scala development
+
+*** scala mode
+
+**** prepare
+
+#+name: git
+#+BEGIN_SRC sh :dir src
+git clone git://github.com/hvesalai/scala-mode2.git
+#+END_SRC
+
+#+name: make-it
+#+BEGIN_SRC sh :dir src/scala-mode2
+make
+#+END_SRC
+
+**** configure
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/repos/installers-in-org/src/scala-mode2/")
+(require 'scala-mode2)
+#+END_SRC
+
+*** ob-scala
+
+Already included in the Org mode installer.

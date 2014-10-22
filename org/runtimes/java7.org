@@ -1,0 +1,16 @@
+#+title:   Installing Java 7
+#+runmode: idempotent
+
+# Note: loosely following this: https://class.coursera.org/progfun-005/wiki/ToolsSetup
+
+*** As a package
+
+#+name: already-installed-openjdk-7
+#+BEGIN_SRC sh
+dpkg -l | grep openjdk-7
+#+END_SRC
+
+#+name: apt-get-java
+#+BEGIN_SRC sh :unless already-installed-openjdk-7
+sudo apt-get install openjdk-7-jdk
+#+END_SRC
