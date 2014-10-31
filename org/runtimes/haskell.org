@@ -5,6 +5,11 @@
 
 **** Get the Source
 
+***** Linux
+:PROPERTIES:
+:platform: linux
+:END:
+
 #+name: already-downloaded-glasgow-haskell-pkg
 #+BEGIN_SRC sh :dir src
 [ -e ghc-7.8.3-x86_64-unknown-linux-deb7.tar.bz2 ]

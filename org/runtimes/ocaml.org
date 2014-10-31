@@ -1,0 +1,115 @@
+#+TITLE:    Ocaml setup
+#+runmode:  idempotent
+
+*** DONE Installing Ocaml
+
+Basing frokm the instructions at: <http://opam.ocaml.org/doc/Install.html>
+
+#+name: ocaml-installed
+#+BEGIN_SRC sh
+ocaml -vnum
+#+END_SRC
+
+#+name: ocaml-install
+#+begin_src sh :unless ocaml-installed
+sudo add-apt-repository ppa:avsm/ppa
+sudo apt-get update
+sudo apt-get install -y ocaml ocaml-native-compilers camlp4-extra opam
+#+end_src
+
+*** DONE Initialize =opam=
+
+#+name: opam-installed
+#+BEGIN_SRC sh
+opam --version
+#+END_SRC
+
+#+name: opam-init
+#+BEGIN_SRC sh :unless opam-installed
+opam init
+#+END_SRC
+
+*** DONE Installing Ocaml mode
+    CLOCK: [2014-10-31 金 16:44]--[2014-10-31 金 17:20] =>  0:36
+    CLOCK: [2014-10-31 金 16:27]--[2014-10-31 金 16:44] =>  0:17
+
+Need to get these packages somehow:
+
+#+BEGIN_SRC emacs-lisp
+(prelude-require-packages '(tuareg utop merlin))
+
+(require 'tuareg)
+(require 'utop)
+(require 'merlin)
+#+END_SRC
+
+**** DONE tuareg
+
+#+name: clone-tuareg
+#+BEGIN_SRC sh :dir src
+git clone https://github.com/ocaml/tuareg.git
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/repos/installers-in-org/src/tuareg/")
+(require 'tuareg)
+#+END_SRC
+
+**** DONE utop
+
+#+name: clone-utop
+#+BEGIN_SRC sh :dir src
+git clone https://github.com/diml/utop.git
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/repos/installers-in-org/src/utop/src/top")
+(require 'utop)
+#+END_SRC
+
+**** TODO merlin
+
+#+name: install-merlin-via-opam
+#+BEGIN_SRC sh
+opam install merlin -y
+#+END_SRC
+
+#+name: clone-merlin
+#+BEGIN_SRC sh :dir src
+git clone https://github.com/the-lambda-church/merlin.git
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/repos/installers-in-org/src/merlin/emacs/")
+  (setq merlin-use-auto-complete-mode nil)
+  (require 'merlin)
+#+END_SRC
+
+**** Full setup
+
+#+BEGIN_SRC emacs-lisp
+(setq auto-mode-alist
+      (append '(("\\.ml[ily]?\\'" . tuareg-mode)
+                ("\\.topml\\'" . tuareg-mode))
+              auto-mode-alist))
+
+(add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+
+(add-hook 'tuareg-mode-hook (lambda ()
+                              (progn
+                                (define-key tuareg-mode-map (kbd "C-c C-s")
+                                  'utop)
+                                (setq compile-command
+                                      "opam config exec \"corebuild \""))))
+
+;; Setup merlin completions company is used by default in prelude
+(add-to-list 'company-backends 'merlin-company-backend)
+
+;; Merlin also offers support for autocomplete, uncomment this next line
+;; to activate it.
+;; (setq merlin-use-auto-complete-mode t)
+
+(setq utop-command "opam config exec \"utop -emacs\""
+      merlin-error-after-save nil)
+#+END_SRC
