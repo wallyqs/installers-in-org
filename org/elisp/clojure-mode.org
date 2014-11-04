@@ -1,0 +1,16 @@
+#+TITLE:   clojure mode
+#+runmode: idempotent
+
+#+name: git
+#+BEGIN_SRC sh :dir src
+git clone https://github.com/clojure-emacs/clojure-mode.git
+#+END_SRC
+
+#+name: compile-clojure-mode
+#+BEGIN_SRC sh :dir src
+emacs -Q --batch  -f batch-byte-compile clojure-mode.el
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
