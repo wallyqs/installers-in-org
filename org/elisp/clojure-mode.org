@@ -1,16 +1,59 @@
 #+TITLE:   clojure mode
 #+runmode: idempotent
 
+*** Clojure mode
+
+**** Installing
+
 #+name: git
 #+BEGIN_SRC sh :dir src
 git clone https://github.com/clojure-emacs/clojure-mode.git
 #+END_SRC
 
 #+name: compile-clojure-mode
-#+BEGIN_SRC sh :dir src
-emacs -Q --batch  -f batch-byte-compile clojure-mode.el
+#+BEGIN_SRC sh :dir src/clojure-mode
+/Applications/Emacs.app/Contents/MacOS/Emacs --batch  -f batch-byte-compile clojure-mode.el
+/Applications/Emacs.app/Contents/MacOS/Emacs --batch  -f batch-byte-compile clojure-mode-extra-font-locking.el
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+**** Activation
 
+In =.emacs= :
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+(require 'clojure-mode)
+(require 'clojure-mode-extra-font-locking)
+#+END_SRC
+
+*** Dash 							 :dependency:
+
+#+name: git-clone-dash
+#+BEGIN_SRC sh :dir src
+git clone https://github.com/magnars/dash.el.git
+#+END_SRC
+
+*** Cider
+
+I need this for Org Babel to work correctly..
+
+#+name: git-clone-cider
+#+BEGIN_SRC sh :results output :dir src
+git clone https://github.com/clojure-emacs/cider.git
+#+END_SRC
+
+
+*** Activating all of these
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "./installers-in-org/src/clojure-mode/")
+(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+(require 'clojure-mode)
+
+(add-to-list 'load-path "./installers-in-org/src/dash.el/")
+(require 'dash)
+(require 'dash-functional)
+
+(add-to-list 'load-path "./installers-in-org/src/cider/")
+(require 'cider)
 #+END_SRC

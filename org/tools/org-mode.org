@@ -24,9 +24,16 @@ ls ~/.emacs.d/elpa/ | grep org-*
 git clone git://orgmode.org/org-mode.git org-mode
 #+END_SRC
 
+*** Update Org mode
+
+#+name: check-for-org-mode-updates
+#+BEGIN_SRC sh :dir src/org-mode
+git pull origin master
+#+END_SRC
+
 *** Compilation
 
-**** COMMENT OS X
+**** OS X
 :PROPERTIES:
 :platform: osx
 :END:
@@ -40,7 +47,7 @@ export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
 $EMACS -batch -Q -L lisp -l ../mk/org-fixup -f org-make-autoloads-compile-force
 #+END_SRC
 
-**** DONE Ubuntu 14.04
+**** COMMENT DONE Ubuntu 14.04
 :PROPERTIES:
 :platform: ubuntu-14-04
 :END:
